@@ -1,8 +1,28 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Tienda Frutas 🍎</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="lorem_ipsum">
-        Hola Mundo
-    </string>
+
+    <string name="action_store">Almacenar</string>
+    <string name="action_sell">Vender</string>
+    <string name="action_status">Estatus</string>
+    <string name="action_AddFruit">N Frutas</string>
+    <!--  -->
+    <string name="fruit_apple">Manzana 🍎</string>
+    <string name="fruit_pear">Pera 🍐</string>
+    <string name="fruit_tangerine">Mandarina 🍊</string>
+    <string name="fruit_grape">Uva 🍇</string>
+    <string name="fruit_strawberry">Fresa 🍓</string>
+    <string name="fruit_orange">Naranja 🍊</string>
+    <string name="fruit_handle">Mango 🥭</string>
+
+    <string name="action_fruit">Lista de frutas</string>
+    <string-array name="frutas">
+        <item>@string/fruit_apple</item>
+        <item>@string/fruit_pear</item>
+        <item>@string/fruit_tangerine</item>
+        <item>@string/fruit_grape</item>
+        <item>@string/fruit_strawberry</item>
+        <item>@string/fruit_orange</item>
+        <item>@string/fruit_handle</item>
+    </string-array>
 </resources>
