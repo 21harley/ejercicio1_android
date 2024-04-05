@@ -120,9 +120,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        Log.i("A",listNegocio[0].bodega.listaProducto.size.toString())
-
-
         Log.i("DATA_MESSAGE","dia 4 ) el negocio 1 recibe una devolución de un producto")
         if(listNegocio[0].bodega.listaProducto.size>0){
             var auxProductoBodega1=listNegocio[0].bodega.listaProducto.random()
@@ -137,8 +134,6 @@ class MainActivity : AppCompatActivity() {
                 Producto(nombreRamdo,precio,stock)
             )
         }
-
-
 
         Log.i("DATA_MESSAGE","dia 5 ) el negocio 2 vende 10 productos")
         for(i in 0..9){
