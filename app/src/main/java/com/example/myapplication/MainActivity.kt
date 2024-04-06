@@ -17,14 +17,62 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        /*
         cargarAlmacen()
         cargarSpinner()
-        */
+        binding.contentMainId.exerciseTwo.setOnClickListener {
+            compentenciaAlmacen()
+        }
+        binding.contentMainId.status.setOnClickListener {
+            mostrarStatusFruta()
+        }
+        binding.contentMainId.store.setOnClickListener {
+             var valor=validarDatos(9999).toInt()
+             var select=binding.contentMainId.spinner.firstVisiblePosition
+            var auxFruta=listaFruit[select]
+            if(auxFruta.cargarStock(valor) && valor != 0){
+                binding.contentMainId.salidaMensaje.text="${auxFruta.nombre}, stock:${auxFruta.stock}"
+            }
+            binding.contentMainId.inputText.text.clear()
 
-        // hola eliseo
-        compentenciaAlmacen()
+        }
+        binding.contentMainId.sell.setOnClickListener {
+            var valor=validarDatos(9999).toInt()
+            var select=binding.contentMainId.spinner.firstVisiblePosition
+            var auxFruta=listaFruit[select]
+            if(auxFruta.venderStock(valor) && valor != 0){
+                binding.contentMainId.salidaMensaje.text="${auxFruta.nombre}, vendio:${valor}"
+            }
+            binding.contentMainId.inputText.text.clear()
+        }
     }
+
+    fun mensajeMostrar(mesaje:String){
+        binding.contentMainId.salidaMensaje.text = mesaje+"\n\n"
+    }
+    fun validarDatos(limite:Int):Float{
+        try{
+            var datos=binding.contentMainId.inputText.text
+            var aux=datos.toString().toFloat()
+            if(limite<aux || aux==0f || 0>aux){
+                throw Exception("Valor incorrecto")
+            }
+            return aux
+        }catch (e:Exception){
+            mensajeMostrar("Error al ingresar la cantidad frutas \n" +
+                    "\n solo se permite numeros y cantidades menores a 9999")
+        }
+        return 0.0f
+    }
+    fun mostrarStatusFruta(){
+        var respuesta = "\n"
+        var repuesta1 = "\n"
+        for( i in listaFruit){
+            if(i.stock>0) respuesta +="${i.nombre}:${i.stock} \n"
+            else repuesta1 +="${i.nombre}:${i.stock} \n"
+        }
+        binding.contentMainId.salidaMensaje.text="Frutas con stock mayor a 0:${respuesta} \n\nFrutas con stock en 0: ${repuesta1} \n\n"
+    }
+    //Ejercicio 1
     fun cargarAlmacen(){
         //carga de frutas
         listaFruit.add(Fruit(100f,"Manzana"))

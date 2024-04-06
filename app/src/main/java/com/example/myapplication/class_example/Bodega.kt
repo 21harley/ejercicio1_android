@@ -5,24 +5,29 @@ class Bodega {
     var listaProducto:MutableList<Producto> = mutableListOf()
 
     fun cargarProducto(nuevoProducto:Producto){
-        if(this.listaProducto.contains(nuevoProducto)){
-            this.listaProducto[this.listaProducto.indexOf(nuevoProducto)].stock+=nuevoProducto.stock
-        }else{
-            this.listaProducto.add(nuevoProducto)
+        for (elem in listaProducto){
+            if(elem.nombre == nuevoProducto.nombre){
+                elem.stock+=nuevoProducto.stock
+                return
+            }
         }
+        this.listaProducto.add(nuevoProducto)
     }
 
     fun eliminarProducto(producto: Producto):Boolean{
-        if(this.listaProducto.contains(producto)){
-            var auxProducto=this.listaProducto[this.listaProducto.indexOf(producto)]
-            if(auxProducto.stock-producto.stock>=0){
-                auxProducto.venta+=producto.stock
-                auxProducto.stock-=producto.stock
-                return true
+        for (elem in listaProducto){
+            if(elem.nombre == producto.nombre){
+                if(elem.stock-producto.stock>=0){
+                    elem.venta+=producto.stock
+                    elem.stock-=producto.stock
+                    return true
+                }
             }
         }
         return false
     }
+
+
 }
 
 //Si fuera estatica:
