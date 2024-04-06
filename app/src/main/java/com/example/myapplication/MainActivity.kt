@@ -8,21 +8,91 @@ import com.example.myapplication.class_example.Fruit
 import com.example.myapplication.class_example.Producto
 import com.example.myapplication.databinding.ActivityMainBinding
 import android.util.Log
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var listaFruit:MutableList<Fruit> = mutableListOf()
     var listNegocio:MutableList<Empleado> = mutableListOf()
+    var listaNombreProductos:MutableList<String> = mutableListOf(
+        "MAÍZ BLANCO O NO BLANCO",
+        "FRIJOL ENVASADO O A GRANEL",
+        "ARROZ ENVASADO O A GRANEL",
+        "AZÚCAR ESTANDAR",
+        "HARINA DE MAÍZ",
+        "ACEITE VEGETAL COMESTIBLE",
+        "ATÚN",
+        "SARDINA",
+        "LECHE EN POLVO",
+        "CHILES JALAPEÑOS",
+        "CHIPOTLE",
+        "RAJAS O SERRANOS ENLATADOS",
+        "CAFÉ SOLUBLE",
+        "SAL DE MESA, AVENA",
+        "PASTA PARA SOPA",
+        "HARINA DE TRIGO"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        /*
         cargarAlmacen()
         cargarSpinner()
-        */
-        compentenciaAlmacen()
+        binding.contentMainId.exerciseTwo.setOnClickListener {
+            compentenciaAlmacen()
+        }
+        binding.contentMainId.status.setOnClickListener {
+            mostrarStatusFruta()
+        }
+        binding.contentMainId.store.setOnClickListener {
+             var valor=validarDatos(9999).toInt()
+             var select=binding.contentMainId.spinner.firstVisiblePosition
+            var auxFruta=listaFruit[select]
+            if(auxFruta.cargarStock(valor) && valor != 0){
+                binding.contentMainId.salidaMensaje.text="${auxFruta.nombre}, stock:${auxFruta.stock}"
+            }
+            binding.contentMainId.inputText.text.clear()
+
+        }
+        binding.contentMainId.sell.setOnClickListener {
+            var valor=validarDatos(9999).toInt()
+            var select=binding.contentMainId.spinner.firstVisiblePosition
+            var auxFruta=listaFruit[select]
+            if(auxFruta.venderStock(valor) && valor != 0){
+                binding.contentMainId.salidaMensaje.text="${auxFruta.nombre}, vendio:${valor}"
+            }
+            binding.contentMainId.inputText.text.clear()
+        }
     }
+
+    fun mensajeMostrar(mesaje:String){
+        binding.contentMainId.salidaMensaje.text = mesaje+"\n\n"
+    }
+    fun validarDatos(limite:Int):Float{
+        try{
+            var datos=binding.contentMainId.inputText.text
+            var aux=datos.toString().toFloat()
+            if(limite<aux || aux==0f || 0>aux){
+                throw Exception("Valor incorrecto")
+            }
+            return aux
+        }catch (e:Exception){
+            mensajeMostrar("Error al ingresar la cantidad frutas \n" +
+                    "\n solo se permite numeros y cantidades menores a 9999")
+        }
+        return 0.0f
+    }
+    fun mostrarStatusFruta(){
+        var respuesta = "\n"
+        var repuesta1 = "\n"
+        for( i in listaFruit){
+            if(i.stock>0) respuesta +="${i.nombre}:${i.stock} \n"
+            else repuesta1 +="${i.nombre}:${i.stock} \n"
+        }
+        binding.contentMainId.salidaMensaje.text="Frutas con stock mayor a 0:${respuesta} \n\nFrutas con stock en 0: ${repuesta1} \n\n"
+    }
+    //Ejercicio 1
     fun cargarAlmacen(){
         //carga de frutas
         listaFruit.add(Fruit(100f,"Manzana"))
@@ -41,24 +111,13 @@ class MainActivity : AppCompatActivity() {
         listaFruit[4].stock=20
         listaFruit[5].stock=10
         listaFruit[6].stock=40
-        /*
-                //compra
-                for (i in 0..listaFruit.size-1){
-                    listaFruit[i].venderStock(10)
-                }
 
-                var respuesta = ""
-                var repuesta1 = ""
-                for( i in listaFruit){
-                    if(i.stock>0){
-                        respuesta +=" ${i.nombre}:${i.stock}"
-                    }else{
-                        repuesta1 +=" ${i.nombre}:${i.stock}"
-                    }
-                }
-                binding.contentMainId.message.text="Frutas con stock mayor a 0:${respuesta}"
-                binding.contentMainId.message1.text="Frutas con stock en 0: ${repuesta1}"
-        */
+        //compra
+        for (i in 0..listaFruit.size-1){
+            listaFruit[i].venderStock(10)
+        }
+
+        mostrarStatusFruta()
     }
     fun cargarSpinner(){
         val listaFruit= listOf<String>(
@@ -73,43 +132,31 @@ class MainActivity : AppCompatActivity() {
         binding.contentMainId.spinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listaFruit)
     }
 
-    fun compentenciaAlmacen(){
-        var listaNombreProductos:MutableList<String> = mutableListOf(
-        "MAÍZ BLANCO O NO BLANCO",
-        "FRIJOL ENVASADO O A GRANEL",
-        "ARROZ ENVASADO O A GRANEL",
-        "AZÚCAR ESTANDAR",
-        "HARINA DE MAÍZ",
-        "ACEITE VEGETAL COMESTIBLE",
-        "ATÚN",
-        "SARDINA",
-        "LECHE EN POLVO",
-        "CHILES JALAPEÑOS",
-        "CHIPOTLE",
-        "RAJAS O SERRANOS ENLATADOS",
-        "CAFÉ SOLUBLE",
-        "SAL DE MESA, AVENA",
-        "PASTA PARA SOPA",
-        "HARINA DE TRIGO"
-        )
+    //Ejercicio 2
+    fun crearAlmacen(){
         listNegocio.add(Empleado("12452","Negocio1"))
         listNegocio.add(Empleado("124536","Negocio2"))
         listNegocio.add(Empleado("14785","Negocio3"))
+    }
 
+    fun primerDia(){
         Log.i("DATA_MESSAGE","dia 1) al negocio 2 le compran 15 productos ")
         for(i in 0..14){
             var stock=(1..10).random()
             var precio=(100..500).random().toFloat()
             listNegocio[1].bodega.cargarProducto(Producto(listaNombreProductos[i],precio,stock))
         }
+    }
 
+    fun segundoDia(){
         Log.i("DATA_MESSAGE","día 2. al negocio 3 le viene un camión con 10 productos nuevos para agregar al depósito.")
         for(i in 0..9){
             var stock=(1..10).random()
             var precio=(100..500).random().toFloat()
             listNegocio[2].bodega.cargarProducto(Producto(listaNombreProductos[i],precio,stock))
         }
-
+    }
+    fun tercerDia(){
         Log.i("DATA_MESSAGE","dia 3 ) el negocio 1 vende 5 productos")
         for(i in 0..4){
             var stock=(1..10).random()
@@ -119,7 +166,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Mensaje_Error_Compra","No se logro vender el producto ${auxProducto.nombre} del almacen ${listNegocio[0].nombre}")
             }
         }
-
+    }
+    fun cuartoDia(){
         Log.i("DATA_MESSAGE","dia 4 ) el negocio 1 recibe una devolución de un producto")
         if(listNegocio[0].bodega.listaProducto.size>0){
             var auxProductoBodega1=listNegocio[0].bodega.listaProducto.random()
@@ -134,7 +182,8 @@ class MainActivity : AppCompatActivity() {
                 Producto(nombreRamdo,precio,stock)
             )
         }
-
+    }
+    fun quintoDia(){
         Log.i("DATA_MESSAGE","dia 5 ) el negocio 2 vende 10 productos")
         for(i in 0..9){
             var stock=(1..10).random()
@@ -144,7 +193,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Mensaje_Error_Compra","No se logro vender el producto ${auxProducto.nombre} del almacen ${listNegocio[1].nombre}")
             }
         }
-
+    }
+    fun sextoDia(){
         Log.i("DATA_MESSAGE","dia 6 ) el negocio 3 vende 10 productos")
         for(i in 0..9){
             var stock=(1..10).random()
@@ -154,7 +204,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Mensaje_Error_Compra","No se logro vender el producto ${auxProducto.nombre} del almacen ${listNegocio[2].nombre}")
             }
         }
-
+    }
+    fun sectimoDia(){
         Log.i("DATA_MESSAGE","dia 7 ) el negocio 2 recibe un camión con 10 productos existentes\n")
         for(i in 0..9){
             var stock=(1..10).random()
@@ -162,7 +213,8 @@ class MainActivity : AppCompatActivity() {
             var auxProducto=Producto(auxProductoBodega1.nombre,auxProductoBodega1.precio,stock)
             listNegocio[1].bodega.cargarProducto(auxProducto)
         }
-
+    }
+    fun octovoDia(){
         Log.i("DATA_MESSAGE","dia 8) el negocio 1 le compra al negocio 3 5 productos")
         for(i in 0..4){
             var stock=(1..10).random()
@@ -173,7 +225,8 @@ class MainActivity : AppCompatActivity() {
             }
             listNegocio[0].bodega.cargarProducto(auxProducto)
         }
-
+    }
+    fun novenoDia(){
         Log.i("DATA_MESSAGE","dia 9) el negocio 2 le compra 7 productos al negocio 1 y si no tiene stock se los compra al negocio 3")
         var numNegocio=if(listNegocio[0].bodega.listaProducto.size-1>=6) 0 else 2
         for(i in 0..4){
@@ -185,7 +238,8 @@ class MainActivity : AppCompatActivity() {
             }
             listNegocio[1].bodega.cargarProducto(auxProducto)
         }
-
+    }
+    fun decimoDia(){
         Log.i("DATA_MESSAGE","dia 10) todos los negocios venden 5 productos iguales. y mismas cantidades. ")
         for(i in 0..4){
             var stock=(1..10).random()
@@ -198,11 +252,36 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
-
-
+    }
+    fun compentenciaAlmacen(){
+        crearAlmacen()
+        primerDia()
+        segundoDia()
+        tercerDia()
+        cuartoDia()
+        quintoDia()
+        sextoDia()
+        sectimoDia()
+        octovoDia()
+        novenoDia()
+        decimoDia()
+        mostrarPantalla()
     }
 
+    fun mostrarPantalla(){
+        binding.contentMainId.salidaMensaje.text="..."
+        var auxString="\n"
+        for( a in listNegocio){
+            var total_venta_negocio=0.0f
+            auxString+="Negocio:${a.nombre}\n"
+            for (p in a.bodega.listaProducto){
+                auxString+="Nombre:${p.nombre}\nStock:${p.stock}\nTotal Venta${p.venta}\nTotal generado:${p.venta*p.precio}\n"
+                total_venta_negocio+=p.venta*p.precio
+            }
+            auxString+="Total de Venta Negocio:${total_venta_negocio} \n\n"
+        }
+        binding.contentMainId.salidaMensaje.text=auxString
+    }
     /*
     dia 9) el negocio 2 le compra 7 productos al negocio 1 y si no tiene stock se los compra al negocio 3
 
