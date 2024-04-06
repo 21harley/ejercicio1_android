@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         cargarAlmacen()
         cargarSpinner()
         */
+
+        // hola eliseo
         compentenciaAlmacen()
     }
     fun cargarAlmacen(){
