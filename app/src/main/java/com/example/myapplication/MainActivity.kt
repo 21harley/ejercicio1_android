@@ -11,6 +11,7 @@ import android.util.Log
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
     var listaFruit:MutableList<Fruit> = mutableListOf()
     var listNegocio:MutableList<Empleado> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +41,13 @@ class MainActivity : AppCompatActivity() {
             var valor=validarDatos(9999).toInt()
             var select=binding.contentMainId.spinner.firstVisiblePosition
             var auxFruta=listaFruit[select]
+
             if(auxFruta.venderStock(valor) && valor != 0){
                 binding.contentMainId.salidaMensaje.text="${auxFruta.nombre}, vendio:${valor}"
+
+            }
+            if(auxFruta.stock-valor<0){
+                binding.contentMainId.salidaMensaje.text="El numero Ingresado supera el Stok por favor ingrese un avalor igual o menor al ${auxFruta.stock}"
             }
             binding.contentMainId.inputText.text.clear()
         }
