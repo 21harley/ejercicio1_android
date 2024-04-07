@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//eliseo marin ***********************
         cargarAlmacen()
         cargarSpinner()
         binding.contentMainId.exerciseTwo.setOnClickListener {
