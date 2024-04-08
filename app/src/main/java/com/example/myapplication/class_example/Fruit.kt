@@ -4,36 +4,36 @@ import java.lang.Exception
 import javax.security.auth.callback.Callback
 
 class Fruit {
-    var precio = 0.0f
-    var nombre = ""
-    var estacion = ""
-    var precio_oferta=""
+    var price = 0.0f
+    var name = ""
+    var station = ""
+    var offer_price=""
     var stock = 0
-    var iv_producto= 0.0f
-    var venta = 0
+    var id_product= 0.0f
+    var sale = 0
 
-    constructor(precio:Float=0.0f,nombre:String=""){
-        this.precio=precio
-        this.nombre=nombre
+    constructor(price:Float=0.0f,name:String=""){
+        this.price=price
+        this.name=name
     }
 
     constructor(
-        precio:Float=0.0f,
-        nombre:String="",
-        estacion:String="",
-        precio_oferta:String="",
+        price:Float=0.0f,
+        name:String="",
+        station:String="",
+        offer_price:String="",
         stock:Int=0,
-        iv_producto:Float=0.0f
+        id_product:Float=0.0f
     ){
-        this.precio=precio
-        this.nombre=nombre
-        this.estacion=estacion
-        this.precio_oferta=precio_oferta
+        this.price=price
+        this.name=name
+        this.station=station
+        this.offer_price=offer_price
         this.stock=stock
-        this.iv_producto=iv_producto
+        this.id_product=id_product
     }
 
-    fun validarOperacion(callback:()->Boolean):Boolean{
+    fun validateOperation(callback:()->Boolean):Boolean{
         try {
             return callback()
         }catch (e:Exception){
@@ -41,26 +41,26 @@ class Fruit {
         }
     }
 
-    fun validarNumero(n:Int):Boolean{
+    fun validateNumber(n:Int):Boolean{
         if (n==0) return false
         if (0>n) return  false
         return true
     }
 
-    fun cargarStock(agregarCantidad:Int=0):Boolean{
-        if (!validarNumero(agregarCantidad)) return false
-        return validarOperacion{
-            this.stock+=agregarCantidad
+    fun loadStock(addQuantity:Int=0):Boolean{
+        if (!validateNumber(addQuantity)) return false
+        return validateOperation{
+            this.stock+=addQuantity
             true
         }
     }
 
-    fun venderStock(ventaCantidad:Int=0):Boolean{
-        if (!validarNumero(ventaCantidad)) return false
-        if (0>this.stock-ventaCantidad) return false
-        return validarOperacion {
-            this.venta+=ventaCantidad
-            this.stock-=ventaCantidad
+    fun sellStock(saleQuantity:Int=0):Boolean{
+        if (!validateNumber(saleQuantity)) return false
+        if (0>this.stock-saleQuantity) return false
+        return validateOperation{
+            this.sale+=saleQuantity
+            this.stock-=saleQuantity
             true
         }
     }

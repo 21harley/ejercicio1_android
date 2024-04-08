@@ -1,22 +1,22 @@
 <resources>
-    <string name="app_name">Tienda Frutas 🍎</string>
+    <string name="app_name">Fruit Store 🍎</string>
     <string name="action_settings">Settings</string>
 
-    <string name="action_store">Almacenar</string>
-    <string name="action_sell">Vender</string>
-    <string name="action_status">Estatus</string>
-    <string name="action_AddFruit">N Frutas</string>
+    <string name="action_store">Store</string>
+    <string name="action_sell">Sell</string>
+    <string name="action_status">Status</string>
+    <string name="action_AddFruit">Add Fruits</string>
     <!--  -->
-    <string name="fruit_apple">Manzana 🍎</string>
-    <string name="fruit_pear">Pera 🍐</string>
-    <string name="fruit_tangerine">Mandarina 🍊</string>
-    <string name="fruit_grape">Uva 🍇</string>
-    <string name="fruit_strawberry">Fresa 🍓</string>
-    <string name="fruit_orange">Naranja 🍊</string>
+    <string name="fruit_apple">Apple 🍎</string>
+    <string name="fruit_pear">Pear 🍐</string>
+    <string name="fruit_tangerine">Tangerine 🍊</string>
+    <string name="fruit_grape">Grape 🍇</string>
+    <string name="fruit_strawberry">Strawberry 🍓</string>
+    <string name="fruit_orange">Orange 🍊</string>
     <string name="fruit_handle">Mango 🥭</string>
 
-    <string name="action_fruit">Lista de frutas</string>
-    <string-array name="frutas">
+    <string name="action_fruit">List of Fruits</string>
+    <string-array name="fruits">
         <item>@string/fruit_apple</item>
         <item>@string/fruit_pear</item>
         <item>@string/fruit_tangerine</item>
