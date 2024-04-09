@@ -22,15 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var listFruit:MutableList<Fruit> = mutableListOf()
     var listBusiness:MutableList<Employee> = mutableListOf()
-    val listNameFruit= listOf<String>(
-        resources.getString(R.string.fruit_apple),
-        resources.getString(R.string.fruit_pear),
-        resources.getString(R.string.fruit_tangerine),
-        resources.getString(R.string.fruit_grape),
-        resources.getString(R.string.fruit_strawberry),
-        resources.getString(R.string.fruit_orange),
-        resources.getString(R.string.fruit_handle),
-    )
+
     var listNameProduct:MutableList<String> = mutableListOf(
         "WHITE OR NON-WHITE CORN",
         "PACKAGED OR BULK BEANS",
@@ -129,13 +121,22 @@ class MainActivity : AppCompatActivity() {
         displayMessage("Fruits with stock greater than 0:${resp} \n\nFruits with stock at 0: ${rep1} \n\n")
     }
 
+
+
     //Exercise 1
     fun createWatehouseFruit(){
         //carga de frutas
-        for(name in listNameFruit){
-            var number=(60..180).random().toFloat()
-            listFruit.add(Fruit(number,name))
-        }
+//        for(name in listNameFruit){
+//            var number=(60..180).random().toFloat()
+//            listFruit.add(Fruit(number,name))
+//        }
+        listFruit.add(Fruit(100f,"Apple"))
+        listFruit.add(Fruit(80f,"Pear"))
+        listFruit.add(Fruit(60f,"Tangerine"))
+        listFruit.add(Fruit(180f,"Grape"))
+        listFruit.add(Fruit(130f,"Strawberry"))
+        listFruit.add(Fruit(70f,"Orange"))
+        listFruit.add(Fruit(60f,"Mango"))
 
         //modificacion de stock
         for(i in 0..5){
@@ -144,10 +145,20 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun loadSpinner(){
+        val listNameFruit= listOf<String>(
+            resources.getString(R.string.fruit_apple),
+            resources.getString(R.string.fruit_pear),
+            resources.getString(R.string.fruit_tangerine),
+            resources.getString(R.string.fruit_grape),
+            resources.getString(R.string.fruit_strawberry),
+            resources.getString(R.string.fruit_orange),
+            resources.getString(R.string.fruit_handle),
+        )
         binding.contentMainId.spinner.adapter = ArrayAdapter<String>(
             this,android.R.layout.simple_list_item_1,listNameFruit
         )
     }
+
 
     //Exercise 2
     fun createWetehouse(){
