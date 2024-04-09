@@ -22,6 +22,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var listFruit:MutableList<Fruit> = mutableListOf()
     var listBusiness:MutableList<Employee> = mutableListOf()
+    val listNameFruit= listOf<String>(
+        resources.getString(R.string.fruit_apple),
+        resources.getString(R.string.fruit_pear),
+        resources.getString(R.string.fruit_tangerine),
+        resources.getString(R.string.fruit_grape),
+        resources.getString(R.string.fruit_strawberry),
+        resources.getString(R.string.fruit_orange),
+        resources.getString(R.string.fruit_handle),
+    )
     var listNameProduct:MutableList<String> = mutableListOf(
         "WHITE OR NON-WHITE CORN",
         "PACKAGED OR BULK BEANS",
@@ -47,9 +56,7 @@ class MainActivity : AppCompatActivity() {
         createWatehouseFruit()
         loadSpinner()
         binding.contentMainId.store.setOnClickListener {
-            val value=validateData(9999).toInt()
-            val select=binding.contentMainId.spinner.firstVisiblePosition
-            val auxFruit=listFruit[select]
+            val (value,auxFruit)=valuesSelect()
             if(auxFruit.loadStock(value) && value != 0){
                 displayMessage("${auxFruit.name}, stock:${auxFruit.stock}")
             }
@@ -57,13 +64,9 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.contentMainId.sell.setOnClickListener {
-            val value=validateData(9999).toInt()
-            val select=binding.contentMainId.spinner.firstVisiblePosition
-            val auxFruit=listFruit[select]
-
+            val (value,auxFruit)=valuesSelect()
             if(auxFruit.sellStock(value) && value != 0){
                 displayMessage("${auxFruit.name}, sold:${value}")
-
             }
             if(auxFruit.stock-value<0){
                 displayMessage("The number entered exceeds the stock, please enter a value equal to or less than ${auxFruit.stock}")
@@ -87,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
     //Tools
+    fun valuesSelect():Pair<Int,Fruit>{
+        val value=validateData(9999).toInt()
+        val select=binding.contentMainId.spinner.firstVisiblePosition
+        val auxFruit=listFruit[select]
+        return Pair(value,auxFruit)
+    }
     fun cleatText(){
         binding.contentMainId.inputText.text.clear()
     }
@@ -120,59 +129,25 @@ class MainActivity : AppCompatActivity() {
         displayMessage("Fruits with stock greater than 0:${resp} \n\nFruits with stock at 0: ${rep1} \n\n")
     }
 
-
-
     //Exercise 1
     fun createWatehouseFruit(){
         //carga de frutas
-        listFruit.add(Fruit(100f,"Manzana"))
-        listFruit.add(Fruit(80f,"Pera"))
-        listFruit.add(Fruit(60f,"Mandarina"))
-        listFruit.add(Fruit(180f,"Uva"))
-        listFruit.add(Fruit(130f,"Fresa"))
-        listFruit.add(Fruit(70f,"Naranja"))
-        listFruit.add(Fruit(60f,"Mango"))
+        for(name in listNameFruit){
+            var number=(60..180).random().toFloat()
+            listFruit.add(Fruit(number,name))
+        }
 
         //modificacion de stock
-        listFruit[0].stock=10
-        listFruit[1].stock=20
-        listFruit[2].stock=30
-        listFruit[3].stock=40
-        listFruit[4].stock=20
-        listFruit[5].stock=10
-        listFruit[6].stock=40
-        /*
-                //compra
-                for (i in 0..listaFruit.size-1){
-                    listaFruit[i].venderStock(10)
-                }
+        for(i in 0..5){
+            listFruit[i].stock=10
+        }
 
-                var respuesta = ""
-                var repuesta1 = ""
-                for( i in listaFruit){
-                    if(i.stock>0){
-                        respuesta +=" ${i.nombre}:${i.stock}"
-                    }else{
-                        repuesta1 +=" ${i.nombre}:${i.stock}"
-                    }
-                }
-                binding.contentMainId.message.text="Frutas con stock mayor a 0:${respuesta}"
-                binding.contentMainId.message1.text="Frutas con stock en 0: ${repuesta1}"
-        */
     }
     fun loadSpinner(){
-        val listaFruit= listOf<String>(
-            resources.getString(R.string.fruit_apple),
-            resources.getString(R.string.fruit_pear),
-            resources.getString(R.string.fruit_tangerine),
-            resources.getString(R.string.fruit_grape),
-            resources.getString(R.string.fruit_strawberry),
-            resources.getString(R.string.fruit_orange),
-            resources.getString(R.string.fruit_handle),
+        binding.contentMainId.spinner.adapter = ArrayAdapter<String>(
+            this,android.R.layout.simple_list_item_1,listNameFruit
         )
-        binding.contentMainId.spinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listaFruit)
     }
-
 
     //Exercise 2
     fun createWetehouse(){
@@ -180,6 +155,7 @@ class MainActivity : AppCompatActivity() {
         listBusiness.add(Employee("124536","Business2"))
         listBusiness.add(Employee("14785","Business3"))
     }
+
     fun firstDay(){
         Log.i("DATA_MESSAGE","Day 1) Business 2 buys 15 products")
         for(i in 0..14){
