@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         for(i in 0..14){
             val stock=(1..10).random()
             val price=(100..500).random().toFloat()
-            listBusiness[1].watehouse.loadProduct(Product(listNameProduct[i],price,stock))
+            listBusiness[1].loadStock(Product(listNameProduct[i],price,stock))
         }
     }
     fun secondDay(){
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         for(i in 0..9){
             val stock=(1..10).random()
             val price=(100..500).random().toFloat()
-            listBusiness[2].watehouse.loadProduct(Product(listNameProduct[i],price,stock))
+            listBusiness[2].loadStock(Product(listNameProduct[i],price,stock))
         }
     }
     fun thirdDay(){
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val price=(100..500).random().toFloat()
             val auxProduct=Product(listNameProduct[i],price,stock)
-            if(!listBusiness[0].watehouse.deleteProduct(auxProduct)){
+            if(!listBusiness[0].deleteStock(auxProduct)){
                 Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[0].name} could not be sold.")
             }
         }
@@ -198,14 +198,14 @@ class MainActivity : AppCompatActivity() {
         Log.i("DATA_MESSAGE","Day 4) Business 1 receives a return of a product")
         if(listBusiness[0].watehouse.listProduct.size>0){
             val auxWarehouseProduct1=listBusiness[0].watehouse.listProduct.random()
-            listBusiness[0].watehouse.loadProduct(
+            listBusiness[0].loadStock(
                 Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,10)
             )
         }else{
             val stock=(1..10).random()
             val price=(100..500).random().toFloat()
             val randomName=listNameProduct[(0..listNameProduct.size-1).random()]
-            listBusiness[0].watehouse.loadProduct(
+            listBusiness[0].loadStock(
                 Product(randomName,price,stock)
             )
         }
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val auxWarehouseProduct1=listBusiness[1].watehouse.listProduct.random()
             val auxProduct=Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,stock)
-            if(!listBusiness[1].watehouse.deleteProduct(auxProduct)){
+            if(!listBusiness[1].deleteStock(auxProduct)){
                 Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[1].name} could not be sold.")
             }
         }
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val auxWarehouseProduct1=listBusiness[2].watehouse.listProduct.random()
             val auxProduct=Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,stock)
-            if(!listBusiness[2].watehouse.deleteProduct(auxProduct)){
+            if(!listBusiness[2].deleteStock(auxProduct)){
                 Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[2].name} could not be sold.")
             }
         }
@@ -238,7 +238,7 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val auxWarehouseProduct1=listBusiness[1].watehouse.listProduct.random()
             val auxProduct=Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,stock)
-            listBusiness[1].watehouse.loadProduct(auxProduct)
+            listBusiness[1].loadStock(auxProduct)
         }
     }
     fun eighthDay(){
@@ -247,10 +247,10 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val auxWarehouseProduct1=listBusiness[2].watehouse.listProduct.random()
             val auxProduct=Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,stock)
-            if(!listBusiness[2].watehouse.deleteProduct(auxProduct)){
+            if(!listBusiness[2].deleteStock(auxProduct)){
                 Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[2].name} could not be sold.")
             }
-            listBusiness[0].watehouse.loadProduct(auxProduct)
+            listBusiness[0].loadStock(auxProduct)
         }
     }
     fun ninthDay(){
@@ -260,10 +260,10 @@ class MainActivity : AppCompatActivity() {
             val stock=(1..10).random()
             val auxWarehouseProduct1=listBusiness[numBusiness].watehouse.listProduct.random()
             val auxProduct=Product(auxWarehouseProduct1.name,auxWarehouseProduct1.price,stock)
-            if(!listBusiness[numBusiness].watehouse.deleteProduct(auxProduct)){
+            if(!listBusiness[numBusiness].deleteStock(auxProduct)){
                 Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[numBusiness].name} could not be sold.")
             }
-            listBusiness[1].watehouse.loadProduct(auxProduct)
+            listBusiness[1].loadStock(auxProduct)
         }
     }
     fun tenthDay(){
@@ -273,7 +273,7 @@ class MainActivity : AppCompatActivity() {
             val auxProduct1=listBusiness[0].watehouse.listProduct[i]
             for(j in 0..2){
                 val auxProduct=Product(auxProduct1.name,auxProduct1.price,stock)
-                if(!listBusiness[j].watehouse.deleteProduct(auxProduct)){
+                if(!listBusiness[j].deleteStock(auxProduct)){
                     Log.d("Purchase_Error_Message","The product ${auxProduct.name} from the warehouse ${listBusiness[j].name} could not be sold.")
                 }
             }
