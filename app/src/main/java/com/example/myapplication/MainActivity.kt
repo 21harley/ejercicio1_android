@@ -57,11 +57,11 @@ class MainActivity : AppCompatActivity() {
         }
         binding.contentMainId.sell.setOnClickListener {
             val (value,auxFruit)=valuesSelect()
+            if(0>(auxFruit.stock-value)){
+                displayMessage("The number entered exceeds the stock, please enter a value equal to or less than ${auxFruit.stock}")
+            }
             if(auxFruit.sellStock(value) && value != 0){
                 displayMessage("${auxFruit.name}, sold:${value}")
-            }
-            if(auxFruit.stock-value<0){
-                displayMessage("The number entered exceeds the stock, please enter a value equal to or less than ${auxFruit.stock}")
             }
             cleatText()
         }
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
         //modificacion de stock
         for(i in 0..5){
-            listFruit[i].stock=10
+            listFruit[i].stock=(10..20).random()
         }
 
     }
